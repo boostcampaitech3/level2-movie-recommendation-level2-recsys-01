@@ -26,6 +26,33 @@ def check_path(path):
         os.makedirs(path)
         print(f"{path} created")
 
+def encode_mapping(train_ratings, data):
+    pre_user = train_ratings["user"].unique()
+    post_user = list(range(len(pre_user)))
+    pre_item = train_ratings["item"].unique()
+    post_item = list(range(len(pre_item)))
+    user_mapping = pd.DataFrame({'pre_user': pre_user, 'post_user': post_user})
+    user_encode = user_mapping.copy().set_index('pre_user')['post_user'].to_dict()
+    item_mapping = pd.DataFrame({'pre_item': pre_item, 'post_item': post_item})
+    item_encode = item_mapping.copy().set_index('pre_item')['post_item'].to_dict()
+    encoded_df = data.copy()
+    encoded_df["user"] = encoded_df["user"].map(user_encode)
+    encoded_df["item"] = encoded_df["item"].map(item_encode)
+    return encoded_df
+
+def decode_mapping(train_ratings, data):
+    pre_user = train_ratings["user"].unique()
+    post_user = list(range(len(pre_user)))
+    pre_item = train_ratings["item"].unique()
+    post_item = list(range(len(pre_item)))
+    user_mapping = pd.DataFrame({'pre_user': pre_user, 'post_user': post_user})
+    user_decode = user_mapping.copy().set_index('post_user')['pre_user'].to_dict()
+    item_mapping = pd.DataFrame({'pre_item': pre_item, 'post_item': post_item})
+    item_decode = item_mapping.copy().set_index('post_item')['pre_item'].to_dict()
+    decoded_df = data.copy()
+    decoded_df["user"] = decoded_df["user"].map(user_decode)
+    decoded_df["item"] = decoded_df["item"].map(item_decode)
+    return decoded_df
 
 def neg_sample(item_set, item_size):
     item = random.randint(1, item_size - 1)
@@ -152,7 +179,7 @@ def generate_rating_matrix_submission(user_seq, num_users, num_items):
     return rating_matrix
 
 
-def generate_submission_file(data_file, preds):
+def generate_submission_file(data_file, preds, file_name):
 
     rating_df = pd.read_csv(data_file)
     users = rating_df["user"].unique()
@@ -164,7 +191,7 @@ def generate_submission_file(data_file, preds):
             result.append((users[index], item))
 
     pd.DataFrame(result, columns=["user", "item"]).to_csv(
-        "output/submission.csv", index=False
+        "output/" + file_name + ".csv", index=False
     )
 
 

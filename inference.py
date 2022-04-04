@@ -67,6 +67,8 @@ def main():
     )
     parser.add_argument("--gpu_id", type=str, default="0", help="gpu_id")
 
+    parser.add_argument("--attribute_name", default="genre", type=str)
+
     args = parser.parse_args()
 
     set_seed(args.seed)
@@ -76,7 +78,13 @@ def main():
     args.cuda_condition = torch.cuda.is_available() and not args.no_cuda
 
     args.data_file = args.data_dir + "train_ratings.csv"
-    item2attribute_file = args.data_dir + args.data_name + "_item2attributes.json"
+    if "genre" in args.attribute_name:
+        a = "genre"
+    elif "director" in args.attribute_name:
+        a = "director"
+    elif "writer" in args.attribute_name:
+        a = "writer"
+    item2attribute_file = args.data_dir + args.data_name + "_item2attributes_" + a + ".json"
 
     user_seq, max_item, _, _, submission_rating_matrix = get_user_seqs(args.data_file)
 
@@ -87,7 +95,7 @@ def main():
     args.attribute_size = attribute_size + 1
 
     # save model args
-    args_str = f"{args.model_name}-{args.data_name}"
+    args_str = f"{args.model_name}-{args.data_name}-{args.attribute_name}"
 
     print(str(args))
 
@@ -112,7 +120,7 @@ def main():
     print(f"Load model from {args.checkpoint_path} for submission!")
     preds = trainer.submission(0)
 
-    generate_submission_file(args.data_file, preds)
+    generate_submission_file(args.data_file, preds, args_str)
 
 
 if __name__ == "__main__":

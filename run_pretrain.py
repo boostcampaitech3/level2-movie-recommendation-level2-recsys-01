@@ -80,19 +80,27 @@ def main():
     )
     parser.add_argument("--gpu_id", type=str, default="0", help="gpu_id")
 
+    parser.add_argument("--attribute_name", default="genre", type=str)
+
     args = parser.parse_args()
 
     set_seed(args.seed)
     check_path(args.output_dir)
 
-    args.checkpoint_path = os.path.join(args.output_dir, "Pretrain.pt")
+    args.checkpoint_path = os.path.join(args.output_dir, "Pretrain_" + args.attribute_name + ".pt")
 
     os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu_id
     args.cuda_condition = torch.cuda.is_available() and not args.no_cuda
 
     # args.data_file = args.data_dir + args.data_name + '.txt'
     args.data_file = args.data_dir + "train_ratings.csv"
-    item2attribute_file = args.data_dir + args.data_name + "_item2attributes.json"
+    if "genre" in args.attribute_name:
+        a = "genre"
+    elif "director" in args.attribute_name:
+        a = "director"
+    elif "writer" in args.attribute_name:
+        a = "writer"
+    item2attribute_file = args.data_dir + args.data_name + "_item2attributes_" + a + ".json"
     # concat all user_seq get a long sequence, from which sample neg segment for SP
     user_seq, max_item, long_sequence = get_user_seqs_long(args.data_file)
 
@@ -120,7 +128,7 @@ def main():
         losses = trainer.pretrain(epoch, pretrain_dataloader)
 
         ## comparing `sp_loss_avg``
-        early_stopping(np.array([-losses["sp_loss_avg"]]), trainer.model)
+        early_stopping(np.array([-losses["aap_loss_avg"]-losses["mip_loss_avg"]-losses["map_loss_avg"]-losses["sp_loss_avg"]]), trainer.model)
         if early_stopping.early_stop:
             print("Early stopping")
             break
