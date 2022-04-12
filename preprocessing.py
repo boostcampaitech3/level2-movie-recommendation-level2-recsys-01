@@ -44,5 +44,28 @@ def main():
             "/opt/ml/input/data/train/Ml_item2attributes_writer.json"
         )
 
+    elif args.attribute_name == "year":
+        genres_df = pd.read_csv("../data/train/genres.tsv", sep="\t")
+        item_df = pd.DataFrame(genres_df["item"].unique(), columns = ["item"])
+        years_df = pd.read_csv("/opt/ml/input/data/train/new_years.csv")
+        def year2era(year):
+            if year <= 1970:
+                return "~70s"
+            if year <= 1990:
+                return "70s~90s"
+            if year <= 2000:
+                return "90s~00s"
+            return "00~15s"
+
+        years_df.year = years_df["year"].apply(year2era)
+        array, index = pd.factorize(years_df["year"])
+        years_df["year"] = array
+        years_df = item_df.merge(years_df, how = "left")
+        years_df.fillna(max(years_df["year"].unique()) + 1, inplace = True)
+        years_df["year"] = list(map(int, years_df["year"]))
+        years_df.groupby("item")["year"].apply(list).to_json(
+            "/opt/ml/input/data/train/Ml_item2attributes_year.json"
+        )
+
 if __name__ == "__main__":
     main()
