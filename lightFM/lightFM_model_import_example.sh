@@ -1,0 +1,2 @@
+# python lightFM_model_import_example.py --model lightFM_example --submission lightFM_model_import_example
+python lightFM_model_import_example.py --model lightFM_warp_50_500_best_model --submission lightFM_warp_50_500_best_model_import
