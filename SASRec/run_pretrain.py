@@ -100,6 +100,8 @@ def main():
         a = "director"
     elif "writer" in args.attribute_name:
         a = "writer"
+    elif "year" in args.attribute_name:
+        a = "year"
     item2attribute_file = args.data_dir + args.data_name + "_item2attributes_" + a + ".json"
     # concat all user_seq get a long sequence, from which sample neg segment for SP
     user_seq, max_item, long_sequence = get_user_seqs_long(args.data_file)

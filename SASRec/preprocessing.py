@@ -15,7 +15,7 @@ def main():
         array, index = pd.factorize(genres_df["genre"])
         genres_df["genre"] = array
         genres_df.groupby("item")["genre"].apply(list).to_json(
-            "/opt/ml/input/data/train/Ml_item2attributes_genre.json"
+            "../data/train/Ml_item2attributes_genre.json"
         )
 
     elif args.attribute_name == "director":
@@ -28,7 +28,7 @@ def main():
         directors_df.fillna(max(directors_df["director"].unique()) + 1, inplace = True)
         directors_df["director"] = list(map(int, directors_df["director"]))
         directors_df.groupby("item")["director"].apply(list).to_json(
-            "/opt/ml/input/data/train/Ml_item2attributes_director.json"
+            "../data/train/Ml_item2attributes_director.json"
         )
 
     elif args.attribute_name == "writer":
@@ -41,13 +41,13 @@ def main():
         writers_df.fillna(max(writers_df["writer"].unique()) + 1, inplace = True)
         writers_df["writer"] = list(map(int, writers_df["writer"]))
         writers_df.groupby("item")["writer"].apply(list).to_json(
-            "/opt/ml/input/data/train/Ml_item2attributes_writer.json"
+            "../data/train/Ml_item2attributes_writer.json"
         )
 
     elif args.attribute_name == "year":
         genres_df = pd.read_csv("../data/train/genres.tsv", sep="\t")
         item_df = pd.DataFrame(genres_df["item"].unique(), columns = ["item"])
-        years_df = pd.read_csv("/opt/ml/input/data/train/new_years.csv")
+        years_df = pd.read_csv("../data/train/new_years.csv")
         def year2era(year):
             if year <= 1970:
                 return "~70s"
@@ -64,7 +64,7 @@ def main():
         years_df.fillna(max(years_df["year"].unique()) + 1, inplace = True)
         years_df["year"] = list(map(int, years_df["year"]))
         years_df.groupby("item")["year"].apply(list).to_json(
-            "/opt/ml/input/data/train/Ml_item2attributes_year.json"
+            "../data/train/Ml_item2attributes_year.json"
         )
 
 if __name__ == "__main__":

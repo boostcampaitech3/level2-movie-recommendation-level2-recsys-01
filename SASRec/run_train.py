@@ -86,6 +86,8 @@ def main():
         a = "director"
     elif "writer" in args.attribute_name:
         a = "writer"
+    elif "year" in args.attribute_name:
+        a = "year"
     item2attribute_file = args.data_dir + args.data_name + "_item2attributes_" + a + ".json"
 
     user_seq, max_item, valid_rating_matrix, test_rating_matrix, _ = get_user_seqs(
