@@ -1,0 +1,1 @@
+python DeepCTR_model_import_example.py --model AutoInt_64_0.5_gelu_256_5 --submission DeepCTR_AutoInt_model_import_example
