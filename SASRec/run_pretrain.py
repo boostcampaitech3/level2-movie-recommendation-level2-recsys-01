@@ -120,7 +120,7 @@ def main():
         losses = trainer.pretrain(epoch, pretrain_dataloader)
 
         ## comparing `sp_loss_avg``
-        early_stopping(np.array([-losses["sp_loss_avg"]]), trainer.model)
+        early_stopping(np.array([-losses["aap_weight"]-losses["mip_weight"]-losses["map_weight"]-losses["sp_loss_avg"]]), trainer.model)
         if early_stopping.early_stop:
             print("Early stopping")
             break
