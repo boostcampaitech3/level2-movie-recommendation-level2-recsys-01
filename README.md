@@ -68,9 +68,17 @@
 
 
 ## Model
-- __RecVAE__ : 기존 `Multi-VAE`에 몇 가지 테크닉을 더한 `collaborative filtering`기반 모델. 제목에 `implicit data` 기반 `top-n recommendation` 문제에 적합하다고 적혀져 있기도 하고  papers with code에서도 좋은 성능을 내는 것을 확인하였다. 실제 대회에서도 단일 모델로 가장 높은 성능인 0.1499를 보였다. 
-- __lightFM__ : `implicit feedback`과 `explicit feedback`에 모두 사용할 수 있는 알고리즘으로 `user`와 `item`의 메타데이터(side information)를 기존의 `MF 알고리즘`에 결합하여 새로운 항목과 새로운 사용자로 일반화할 수 있다는 장점이 있지만, 실제로 `side information`을 사용했을 때 성능이 낮아졌기 때문에 메타데이터를 사용하지 않았다.
-- __SASRec__ : `Markov chain(MC)`과 `Recurrent Neural Network(RNN)`의 장점을 반영한 모델로 `self-attentive`를 활용한 `sequential recommender`, 베이스라인 코드로 주어졌으며 하이퍼파라미터를 조정하며 일부 `sequential`한 특징을 가진 데이터를 모델링 하는 데에 사용되었다.
+- __RecVAE__ : 
+  - 기존 `Multi-VAE`에 몇 가지 테크닉을 더한 `collaborative filtering`기반 모델. <br/>
+  - 제목에 `implicit data` 기반 `top-n recommendation` 문제에 적합하다고 적혀져 있기도 하고  papers with code에서도 좋은 성능을 내는 것을 확인하였다. <br/>
+  - 실제 대회에서도 단일 모델로 가장 높은 성능인 0.1499를 보였다. <br/>
+- __lightFM__ : 
+  - `implicit feedback`과 `explicit feedback`에 모두 사용할 수 있는 알고리즘. <br/>
+  - `user`와 `item`의 메타데이터(side information)를 기존의 `MF 알고리즘`에 결합하여 새로운 항목과 새로운 사용자로 일반화할 수 있다는 장점이 있다. <br/>
+  - 실제로 `side information`을 사용했을 때 성능이 낮아졌기 때문에 메타데이터를 사용하지 않았다. <br/>
+- __SASRec__ : 
+  - `Markov chain(MC)`과 `Recurrent Neural Network(RNN)`의 장점을 반영한 모델. <br/>
+  - `self-attentive`를 활용한 `sequential recommender`, 베이스라인 코드로 주어졌으며 하이퍼파라미터를 조정하며 일부 `sequential`한 특징을 가진 데이터를 모델링 하는 데에 사용되었다. <br/>
 <br/>
 
 ### Ensemble
