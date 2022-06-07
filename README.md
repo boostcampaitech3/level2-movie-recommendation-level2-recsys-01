@@ -11,13 +11,14 @@
 
 - [`김동현`](https://github.com/donghyyun) &nbsp; MF model • RecVAE
 
-- [`심재정`](https://github.com/Jaejeong98) &nbsp; SAR • Bert4Rec • Ensemble(hard voting)
+- [`임지원`](https://github.com/sophi1127) &nbsp; lightFM • DeepCTR • DeepFM
 
 - [`이수연`](https://github.com/coding-groot) &nbsp; DeepFM • Ensemble(hard voting)
 
-- [`임지원`](https://github.com/sophi1127) &nbsp; lightFM • DeepCTR • DeepFM
-
 - [`진상우`](https://github.com/Jin-s-work) &nbsp; SASRec • SSE-PT   
+
+- [`심재정`](https://github.com/Jaejeong98) &nbsp; SAR • Bert4Rec • Ensemble(hard voting)
+
 <br/>
 
 ## About Project
@@ -33,8 +34,8 @@
 ### 평가 지표
 <img width="824" alt="스크린샷 2022-06-07 오후 2 53 09" src="https://user-images.githubusercontent.com/61958748/172305842-0a241881-bac8-428d-b415-8b6f68639a6d.png">
 
-- submisison 파일(csv 형태)에 `Training Data`에 존재하는 전체 유저들에 대해서 각각 10개의 아이템을 추천합니다.   
-- 사전에 MovieLens 데이터에서 추출해놓은 `ground-truth` 아이템들을 고려하여 위의 수식과 같이 `Recall@10`을 계산합니다.   
+- submisison 파일(csv 형태)에 `Training Data`에 존재하는 전체 유저들에 대해서 각각 10개의 아이템을 추천한다.   
+- 사전에 MovieLens 데이터에서 추출해놓은 `ground-truth` 아이템들을 고려하여 위의 수식과 같이 `Recall@10`을 계산한다.
 <br/>
 
 ## 데이터
@@ -46,7 +47,7 @@
 | titles.tsv | 영화 제목(6,807행) |
 | years.tsv | 영화 개봉년도(6,799행) |
 | directors.tsv | 영화별 감독(5,905행) |
-| genres.tsv | 영화 장르 (한 영화에 여러 장르가 포함될 수 있음, 15,934행) |
+| genres.tsv | 영화 장르 (한 영화에 여러 장르가 포함될 수 있다, 15,934행) |
 | writers.tsv | 영화 작가 (11,307행) |   
 <br/>
 
@@ -60,9 +61,9 @@
 
 2. user별로 남긴 영화의 개수와 리뷰를 남긴 날짜 사이의 관계 확인을 통한 Sequential data 판단 <br/>
 <img width="713" alt="스크린샷 2022-06-07 오후 3 15 27" src="https://user-images.githubusercontent.com/61958748/172308904-39248379-e582-40d7-b257-899c1a282801.png">   <br/>
-- 1일 평균 최소 1개, 최대 1,795개, 평균 54개의 영화 리뷰를 남김
-- user가 영화를 볼 때마다 리뷰를 남긴 것이 아니라 하루에 몰아서 리뷰를 남겼다는 판단
-- 실제로 `Sequential 모델`을 사용할 때보다 `Static 모델`을 사용할 때 성능이 높게 나옴
+- 1일 평균 최소 1개, 최대 1,795개, 평균 54개의 영화 리뷰를 남긴다.
+- user가 영화를 볼 때마다 리뷰를 남긴 것이 아니라 하루에 몰아서 리뷰를 남겼다는 판단한다.
+- 실제로 `Sequential 모델`을 사용할 때보다 `Static 모델`을 사용할 때 성능이 높게 나온다.
 <br/>
 
 
@@ -73,9 +74,9 @@
 <br/>
 
 ### Ensemble
-- 모델 각각이 가지고 있는 장점을 살려서 한가지 성능 좋은 모델을 사용하는 것보다 좋은 결과를 내기 위해 `hard voting` 방식을 통한 `ensemble`을 시도
-- 방식 : `recall@10` 결과에 3-4가지 모델을 활용하여 많이 겹치는 것을 우선적으로 추출한 뒤, 성능이 좋은 모델 순으로 가중치를 부여하여 나머지를 채워넣음   
-- 가장 성능이 잘 나온 `ensemble`은 `lightFM`에서 recall@30, `recVAE`에서 recall@30, `SASRec`에서 recall@10을 뽑아 `recVAE`>`lightFM`>`SASRec` 순으로 가중치를 부여한 방식
+- 모델 각각이 가지고 있는 장점을 살려서 한가지 성능 좋은 모델을 사용하는 것보다 좋은 결과를 내기 위해 `hard voting` 방식을 통한 `ensemble`을 시도하였다.
+- 방식 : `recall@10` 결과에 3-4가지 모델을 활용하여 많이 겹치는 것을 우선적으로 추출한 뒤, 성능이 좋은 모델 순으로 가중치를 부여하여 나머지를 채워넣었다.
+- 가장 성능이 잘 나온 `ensemble`은 `lightFM`에서 recall@30, `recVAE`에서 recall@30, `SASRec`에서 recall@10을 뽑아 `recVAE`>`lightFM`>`SASRec` 순으로 가중치를 부여한 방식이다.
 <br/>
 
 ## Result
